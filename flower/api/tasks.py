@@ -89,3 +89,23 @@ class ListTasks(BaseTaskHandler):
             tasks[id] = task
 
         self.write(tasks)
+
+
+class CountTasks(BaseTaskHandler):
+    @web.authenticated
+    def get(self):
+        app = self.application
+        limit = self.get_argument('limit', None)
+        worker = self.get_argument('worker', None)
+        type = self.get_argument('type', None)
+        state = self.get_argument('state', None)
+
+        limit = limit and int(limit)
+        worker = worker if worker != 'All' else None
+        type = type if type != 'All' else None
+        state = state if state != 'All' else None
+
+        tasks = list(TaskModel.iter_tasks(app, limit=limit, type=type,
+                                          worker=worker, state=state))
+
+        self.write(len(tasks))

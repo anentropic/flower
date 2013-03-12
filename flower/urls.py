@@ -54,6 +54,7 @@ handlers = [
         control.WorkerQueueCancelConsumer),
     # Task API
     (r"/api/tasks", tasks.ListTasks),
+    (r"/api/tasks/count", tasks.CountTasks),
     (r"/api/task/async-apply/(.+)", tasks.TaskAsyncApply),
     (r"/api/task/result/(.+)", tasks.TaskResult),
     (r"/api/task/timeout/(.+)", control.TaskTimout),
